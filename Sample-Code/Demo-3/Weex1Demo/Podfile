@@ -1,0 +1,42 @@
+###
+# Author: HanJiangkai
+# Date: 2015.07.23
+# Email: hanjaingkai#haizitong.com
+# File: Podfile for Yuan
+
+###
+#官方源
+source 'https://github.com/CocoaPods/Specs.git'
+#私有源
+source 'http://192.168.0.150:8800/ios_repo/Specs.git'
+
+platform :ios, '7.0'
+#use_frameworks!
+inhibit_all_warnings!
+
+
+target 'Weex1Demo' do 
+  #pod 'MJRefresh', '~> 0.0.4'
+  #pod 'OpenCore', :git => 'http://192.168.0.150:8800/ios_repo/OpenCore.git', :tag => '0.0.2'
+  #pod 'HZNetDiagnoService', :git => 'http://192.168.0.150:8800/ios_repo/HZNetDiagnoService.git', :tag => '0.0.2'
+
+  #pod 'NavigationBarMenu', '0.0.5'
+   pod 'WeexSDK', :path=>'./sdk'
+   pod 'SDWebImage'
+end
+
+###
+#完成安装后，做一些必要的配置
+
+#Using to pod version 0.38.0 and compatibality old version.
+post_install do |installer|
+    installer.pods_project.targets.each do |target|
+        target.build_configurations.each do |config|
+            config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '7.0'
+            if target.name == 'OpenCore'
+                config.build_settings['ENABLE_BITCODE'] = 'NO'
+            end
+        end
+    end
+end
+
